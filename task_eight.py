@@ -59,4 +59,7 @@ def task_eight():
         marker_key_l = marker_key[12:-2]
         mas_df = task_eight_part_five_union_sort.filter(f.col("categori") == str(marker_key_l)).limit(10)
         null_mas_eight = mas_df.union(null_mas_eight)
-    return null_mas_eight
+    task_result_eight_fin = (null_mas_eight.orderBy(f.asc("categori"),
+                                                    f.desc("Rating"),
+                                                    f.asc("Title")))
+    return task_result_eight_fin
