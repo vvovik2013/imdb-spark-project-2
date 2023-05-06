@@ -3,6 +3,12 @@ import pyspark.sql.functions as f
 
 
 def task_six():
+    """
+    Function to output information about how many episodes in each TV Series AND
+    the top 50 of them starting from the TV Series with the biggest quantity of
+    episodes
+    :return: Dataframe
+    """
     task_six_one_part_dff = (title_basics_df
                              .select(f.col("tconst"), f.col("titleType"), f.col("originalTitle"))
                              .where(f.col("titleType").isin("tvSeries")))

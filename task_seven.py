@@ -3,6 +3,10 @@ import pyspark.sql.functions as f
 
 
 def task_seven():
+    """
+    Function to output 10 titles of the most popular movies/series etc. by each decade
+    :return: Dataframe
+    """
     new_dic_tmp = (title_basics_df.select(f.col("tconst").alias("index"), f.col("originalTitle"),
                                           f.col("startYear").substr(startPos=0, length=3).alias("YYY")))
     task_seven_part_one = title_ratings_df.select(f.col("tconst"), f.col("averageRating"))

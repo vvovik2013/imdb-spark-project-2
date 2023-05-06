@@ -1,3 +1,7 @@
+"""
+Recording in variables (dataframes) of the results of reading
+each of the datasets by functions from the "Read_Write" module
+"""
 from Read_Write import read_one_df
 from Shemes_Data_Frames import *
 from Patch_Csv import *

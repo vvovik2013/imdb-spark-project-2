@@ -1,3 +1,4 @@
+"""This file contains the paths to save the results of the program"""
 one_task_patch = "save_dir/task_one"
 two_task_patch = "save_dir/task_two"
 three_task_patch = "save_dir/task_three"

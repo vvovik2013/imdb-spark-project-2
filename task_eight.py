@@ -3,6 +3,10 @@ import pyspark.sql.functions as f
 
 
 def task_eight():
+    """
+    Function to output 10 titles of the most popular movies/series etc. by each genre
+    :return: Dataframe
+    """
     tmp_eight = (title_basics_df.withColumn('genres_one', f.regexp_extract(f.col('genres'), '(.+)\,(.+)', 1))
                                 .withColumn('genres_two', f.regexp_extract(f.col('genres'), '(.+)\,(.+)', 2)))
     tmp_pt = (tmp_eight.withColumn('genres_three', f.regexp_extract(f.col('genres_one'), '(.+)\,(.+)', 1))
