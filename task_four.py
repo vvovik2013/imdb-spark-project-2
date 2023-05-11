@@ -3,6 +3,12 @@ import pyspark.sql.functions as f
 
 
 def task_four():
+    """
+    Function to output names of people, corresponding movies/series and characters they
+    played in those films
+
+    :return: Dataframe
+    """
     task_four_one_part_df = (title_principals_df.select(f.col("tconst"),
                                                         f.col("nconst"),
                                                         f.col("category"),

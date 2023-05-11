@@ -1,3 +1,6 @@
+"""
+SparkSession initialization & Schemes of datasets
+"""
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
 import pyspark.sql.types as t

@@ -3,6 +3,11 @@ import pyspark.sql.functions as f
 
 
 def task_five():
+    """
+    Function to output information about how many adult movies/series etc. there are per region AND
+    the top 100 of them from the region with the biggest count to the region with the smallest one
+    :return: Dataframe
+    """
     task_five_one_part_df = title_basics_df.select(f.col("tconst"), f.col("originalTitle"), f.col("isAdult"))
     task_five_two_part_df = task_five_one_part_df.filter(f.col("isAdult") == 1)
     task_five_tree_part_df = title_ratings_df.select(f.col("tconst"), f.col("averageRating"), f.col("numVotes"))
