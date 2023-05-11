@@ -1,5 +1,7 @@
 from User_Data_Frames import *
 import pyspark.sql.functions as f
+from pyspark.sql import Window
+from pyspark.sql.functions import row_number
 
 
 def task_seven():
@@ -16,23 +18,14 @@ def task_seven():
                                                        f.col("originalTitle"),
                                                        f.col("averageRating"),
                                                        f.col("YYY"))
-    task_seven_part_six = (task_seven_part_three.filter(f.col("YYY") == "186")
-                                                .orderBy(f.desc("averageRating"), f.asc("originalTitle")).limit(10))
-    for i in range(187, 203):
-        c = str(i)
-        new_dic_ppm = (task_seven_part_three.filter(f.col("YYY") == c)
-                                            .orderBy(f.desc("averageRating"), f.asc("originalTitle")).limit(10))
-        task_seven_part_seven = new_dic_ppm.union(task_seven_part_six)
-        task_seven_part_six = task_seven_part_seven
-    task_seven_part_seven = (task_seven_part_six.select(f.col("originalTitle"),
-                                                        f.col("YYY").alias("Decada"),
-                                                        f.col("averageRating")).orderBy(f.asc("Decada")))
-    task_seven_result_part_one = task_seven_part_seven.withColumn("Decades", f.col("Decada")*10)
-    task_seven_result_part_two = (task_seven_result_part_one.select(f.col("originalTitle").alias("Title"),
-                                                                    f.col("averageRating").alias("Rating"),
-                                                                    f.col("Decades").substr(startPos=0, length=4)
-                                                                                    .alias("Decades")))
-    task_result_seven_fin = (task_seven_result_part_two.orderBy(f.asc("Decades"),
-                                                                f.desc("averageRating"),
-                                                                f.asc("originalTitle")))
+    tmp_seven_task = Window.partitionBy("YYY").orderBy(f.desc("averageRating"))
+    task_seven_part_six = task_seven_part_three.withColumn("row_number", row_number().over(tmp_seven_task))
+    task_seven_part_seven = task_seven_part_six.filter(f.col("row_number") <= 10)
+    task_seven_part_eight = task_seven_part_seven.withColumn("Decades", f.col("YYY")*10)
+    task_seven_part_nine = task_seven_part_eight.filter(f.col("Decades") > 0)
+    task_seven_part_ten = (task_seven_part_nine.select(f.col("originalTitle").alias("Title"),
+                                                       f.col("averageRating").alias("Rating"),
+                                                       f.col("Decades").substr(startPos=0, length=4)
+                                                                       .alias("Decades")))
+    task_result_seven_fin = task_seven_part_ten
     return task_result_seven_fin
